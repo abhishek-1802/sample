@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HOLDINFO</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding-bottom: 60px; /* Space for footer */
+            background-color: #101f34;
+        }
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+            color: #00e8d8;
+        }
+        .info-box {
+            width: 80%;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #101f34;
+            color: white;
+        }
+        .info-box p {
+            margin: 5px 0;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            color: #dddddd;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            color: #ffffff;
+        }
+        footer {
+            background-color: #101f34;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+        }
+        nav ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #101f34;
+            color: white;
+            padding: 10px;
+        }
+        nav li {
+            margin-right: 10px;
+        }
+        nav select, nav button {
+            padding: 10px 20px;
+            border-radius: 20px;
+            border: none;
+            background-color: gray;
+            color: white;
+        }
+        nav select {
+            width: 100px;
+        }
+        nav button {
+            background-color: #00e8d8;
+        }
+
+        @media screen and (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+            }
+            nav li {
+                margin-bottom: 10px;
+                margin-right: 0;
+            }
+            nav button, nav select {
+                width: 100%;
+                margin-right: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <ul>
+            <li><b style="color: #00e8d8; margin-right: 700px;">HOLDINFO</b></li>
+            <li>
+                <select>
+                    <option>INR</option>
+                    <option>BTC</option>
+                </select>
+            </li>
+            <li>
+                <select>
+                    <option>BTC</option>
+                    <option>ETH</option>
+                </select>
+            </li>
+            <li>
+                <button style="background-color: gray;">BUY BTC</button>
+            </li>
+            <li style="margin-left: auto;">
+                <button>CONNECT TELEGRAM</button>
+            </li>
+        </ul>
+    </nav>
+
+    <h1>Buy and Sell Stocks</h1>
+    <div class="info-box">
+        <% dynamicData.forEach(data => { %>
+            <p><strong><%= data.value %></strong> - <%= data.time %></p>
+        <% }) %>
+    </div>
+    <table>
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Platform</th>
+                <th>Last Traded Price</th>
+                <th>Buy / Sell Price</th>
+                <th>Difference</th>
+                <th>Savings</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% tickers.forEach((ticker, index) => { %>
+                <tr>
+                    <td><%= index + 1 %></td>
+                    <td><%= ticker.name %></td>
+                    <td>₹ <%= ticker.last %></td>
+                    <td>₹ <%= ticker.buy %> / ₹ <%= ticker.sell %></td>
+                    <td>
+                        <% const difference = ((ticker.last - ticker.buy) / ticker.buy * 100).toFixed(2); %>
+                        <% const savings = (ticker.last - ticker.buy).toFixed(2); %>
+                        <% if (difference >= 0) { %>
+                            <span style="color: green;">▲ <%= difference %> %</span>
+                        <% } else { %>
+                            <span style="color: red;">▼ <%= Math.abs(difference) %> %</span>
+                        <% } %>
+                    </td>
+                    <td>₹ <%= savings %></td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+    <footer>
+        <p>&copy; 2023 Your Company. All rights reserved.</p>
+    </footer> 
+</body>
+</html>
